@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import { EmployeeContext } from "../App";
+import { EmployeeContext } from "../../App";
 import useStyles from "./styles";
 
 const EditEmployeeModal = ({editModal, setEditModal}) => {
@@ -29,6 +29,7 @@ const EditEmployeeModal = ({editModal, setEditModal}) => {
             dbid: "",
             firstName: "",
             lastName: "",
+            email: "",
             organization : ""
         });
     }
@@ -46,9 +47,15 @@ const EditEmployeeModal = ({editModal, setEditModal}) => {
     }
 
     const saveNewEmployee = async () => {
+        if(!editModal.firstName || !editModal.lastName || !editModal.organization){
+            alert("Fill up all the Details");
+            return;
+        }
+
         const body = {
             firstName: editModal.firstName,
             lastName: editModal.lastName,
+            email: editModal.email,
             organization: editModal.organization
         }
 
@@ -71,6 +78,7 @@ const EditEmployeeModal = ({editModal, setEditModal}) => {
                     dbid: "",
                     firstName: "",
                     lastName: "",
+                    email: "",
                     organization : ""
                 });
             }
@@ -86,7 +94,7 @@ const EditEmployeeModal = ({editModal, setEditModal}) => {
                     <Typography id="modal-modal-title" variant="h6" component="h2">
                         Edit Employee
                     </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+                    <Typography id="modal-modal-description" component={'span'} variant={'body2'} sx={{ mt: 1 }}>
                         <TextField id="outlined-basic" label="First Name" variant="outlined" sx={{ mt: 2, width: '100%' }} name="firstName" value={editModal.firstName} onChange={setInfo} />
                         <TextField id="outlined-basic" label="Last Name" variant="outlined" sx={{ mt: 2, width: '100%' }} name="lastName" value={editModal.lastName} onChange={setInfo} />
                         <TextField id="outlined-basic" label="Organization" variant="outlined" sx={{ mt: 2, width: '100%' }} name="organization" value={editModal.organization} onChange={setInfo} />

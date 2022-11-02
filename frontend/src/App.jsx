@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext } from "react";
-import Header from "./Header/Header";
-import EmployeeTable from "./EmployeeTable/EmployeeTable";
-import AddEmployeeBtn from "./AddEmployee/AddEmployeeBtn";
+import Header from "./Components/Header/Header";
+import EmployeeTable from "./Components/EmployeeTable/EmployeeTable";
+import AddEmployeeBtn from "./Components/AddEmployee/AddEmployeeBtn";
 
 export const EmployeeContext = createContext();
 
@@ -24,8 +24,7 @@ const App = () => {
             }
         }catch(err){
             console.log("Error 503 : Service Unavailable");
-        }
-        
+        }   
     }
 
     useEffect(() => {

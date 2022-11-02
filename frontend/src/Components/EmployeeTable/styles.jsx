@@ -9,6 +9,12 @@ const useStyles = makeStyles({
     },
     alignBtn: {
         float: "right"
+    },
+    event: {
+        cursor: "pointer !important",
+        "&:hover": {
+            color: "#3e85d2 !important"
+        }
     }
 })
 

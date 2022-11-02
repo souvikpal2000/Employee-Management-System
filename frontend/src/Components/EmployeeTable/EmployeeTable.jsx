@@ -10,9 +10,10 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { EmployeeContext } from "../App";
+import { EmployeeContext } from "../../App";
 import useStyles from "./styles";
 import EditEmployeeModal from "./EditEmployeeModal";
+import FullDetailsModal from "./FullDetailsModal";
 
 const DeleteModal = ({modal, setModal}) => {
     const {employees, setEmployees} = useContext(EmployeeContext);
@@ -98,8 +99,13 @@ const EmployeeTable = () => {
         dbid: "",
         firstName: "",
         lastName: "",
+        email: "",
         organization : ""
-    })
+    });
+
+    const [detailsModal, setDetailsModal] = useState({
+        open: false
+    });
 
     const handleOpen = (e) => {
         const id = e.target.id;
@@ -119,7 +125,20 @@ const EmployeeTable = () => {
             dbid: employees[id]._id,
             firstName: employees[id].firstName,
             lastName: employees[id].lastName,
+            email: employees[id].email,
             organization : employees[id].organization
+        })
+    }
+
+    const openDetailsModal = (e) => {
+        const id = e.target.id;
+        setDetailsModal({
+            open: true,
+            id: parseInt(id)+1,
+            firstName: employees[id].firstName,
+            lastName: employees[id].lastName,
+            email: employees[id].email,
+            organization: employees[id].organization
         })
     }
 
@@ -134,10 +153,10 @@ const EmployeeTable = () => {
                     <Table aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell sx={style}>ID</TableCell>
-                                <TableCell sx={style}>Employee Name</TableCell>
-                                <TableCell sx={style}>Organization</TableCell>
-                                <TableCell sx={style}>Action</TableCell>
+                                <TableCell sx={style}><b>ID</b></TableCell>
+                                <TableCell sx={style}><b>Employee Name</b></TableCell>
+                                <TableCell sx={style}><b>Organization</b></TableCell>
+                                <TableCell sx={style}><b>Action</b></TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -145,7 +164,7 @@ const EmployeeTable = () => {
                                 return(
                                     <TableRow key={index}>
                                         <TableCell component="th" scope="row">{index+1}</TableCell>
-                                        <TableCell>{employee.firstName + " " + employee.lastName}</TableCell>
+                                        <TableCell className={classes.event} onClick={openDetailsModal} id={index}>{employee.firstName + " " + employee.lastName}</TableCell>
                                         <TableCell>{employee.organization}</TableCell>
                                         <TableCell>
                                             <Button variant="contained" size="medium" color="success" style={{marginRight: '1rem'}} id={index} onClick={openEditModal}>Edit</Button>
@@ -161,7 +180,9 @@ const EmployeeTable = () => {
 
             <DeleteModal modal={modal} setModal={setModal}/>   
 
-            <EditEmployeeModal editModal={editModal} setEditModal={setEditModal} />         
+            <EditEmployeeModal editModal={editModal} setEditModal={setEditModal} />     
+
+            <FullDetailsModal detailsModal={detailsModal} setDetailsModal={setDetailsModal}/>    
         </>
     )
 }
